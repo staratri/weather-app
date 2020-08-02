@@ -29,9 +29,6 @@ export default {
   computed: {
     ...mapState('weather', ['location'])
   },
-  async created () {
-    await this.updateUserLocation()
-  },
   methods: {
     ...mapActions('weather', ['updateUserLocation'])
   }

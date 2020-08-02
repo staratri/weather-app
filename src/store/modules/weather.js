@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { weatherApi } from '@/api'
 import { getDay, getTimeSuffix } from '@/utils/dateHelpers'
 
@@ -75,30 +76,30 @@ export const mutations = {
 }
 
 export const actions = {
-  updateUserLocation ({ commit, dispatch }, passedParams = {}) {
-    navigator.geolocation.getCurrentPosition(async position => {
-      let params
-      if (passedParams.q) {
-        params = passedParams
-      } else if (position.coords.latitude) {
-        params = {
-          lat: position.coords.latitude,
-          lon: position.coords.longitude
-        }
-      } else {
-        params = { q: 'Delhi' }
+  getUserLocation ({ commit, dispatch }) {
+    let userLocation
+    navigator.geolocation.getCurrentPosition(position => {
+      userLocation = {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
       }
-      try {
-        commit('setLoader', true)
-        const location = await weatherApi('weather', params)
-        await commit('setLocation', location)
-        await dispatch('updateForecasts')
-      } catch (err) {
-        console.error(err)
-      } finally {
-        commit('setLoader', false)
-      }
-    })
+      commit('setLocation', userLocation)
+      dispatch('updateUserLocation', userLocation)
+    }, err => { console.log(err); dispatch('updateUserLocation') }, { timeout: 3000 })
+  },
+  async updateUserLocation ({ commit, dispatch, state }, passedParams = null) {
+    const defaultQuery = state.location.lat ? state.location : { q: 'Delhi' }
+    const params = passedParams || defaultQuery
+    try {
+      commit('setLoader', true)
+      const location = await weatherApi('weather', params)
+      await commit('setLocation', location)
+      await dispatch('updateForecasts')
+    } catch (err) {
+      console.error(err)
+    } finally {
+      commit('setLoader', false)
+    }
   },
   async updateForecasts ({ commit, state }) {
     if (!state.location.coord) {

@@ -1,5 +1,5 @@
 <template>
-<div class="chartWrapper">
+<div v-if="hoursVariation" class="chartWrapper">
     <div class="chartAreaWrapper">
         <canvas id="myChart" height="500" width="4000"></canvas>
     </div>
@@ -19,8 +19,8 @@ export default {
   },
 
   mounted () {
-    var ctx = document.getElementById('myChart').getContext('2d')
-    const chart = new Chart(ctx, {
+    var ctx = document.getElementById('myChart') && document.getElementById('myChart').getContext('2d')
+    const chart = ctx && new Chart(ctx, {
       type: 'line',
       // The data for our dataset
       data: {

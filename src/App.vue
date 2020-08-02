@@ -6,11 +6,18 @@
 
 <script>
 import WeatherWidget from './components/WeatherWidget.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'App',
   components: {
     WeatherWidget
+  },
+  created () {
+    this.getUserLocation()
+  },
+  methods: {
+    ...mapActions('weather', ['getUserLocation'])
   }
 }
 </script>
