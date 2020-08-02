@@ -64,11 +64,9 @@ export const mutations = {
     state.location = location
   },
   setForecast (state, forecast) {
-    console.log(forecast)
     state.forecast = forecast
   },
   setSelectedDayId (state, dayId) {
-    console.log(dayId)
     state.selectedDayId = dayId
   },
   setLoader (state, loadingState) {
@@ -111,7 +109,6 @@ export const actions = {
       lon: state.location.coord.lon,
       units: 'metric'
     })
-    console.log(res)
     commit('setSelectedDayId', 0)
     return commit('setForecast', res)
   }

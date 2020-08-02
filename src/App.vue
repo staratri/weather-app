@@ -1,24 +1,22 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <WeatherWidget />
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 import WeatherWidget from './components/WeatherWidget.vue'
 
 export default {
   name: 'App',
   components: {
     WeatherWidget
-    // HelloWorld,
   }
 }
 </script>
 
 <style lang="scss">
+// Reset properties
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -52,7 +50,7 @@ body {
 #app {
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .button-wrapper {
